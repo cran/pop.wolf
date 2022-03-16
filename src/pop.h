@@ -1,6 +1,6 @@
 /* pop.h
  *
- * Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016 Guillaume Chapron.
+ * Copyright (C) 2011-2022 Guillaume Chapron.
  * guillaume.chapron@slu.se
  * with contributions from Camilla Wikenros, Olof Liberg, Øystein Flagstad,
  * Cyril Milleret, Johan Månsson, Linn Svensson, Barbara Zimmermann,
@@ -48,38 +48,6 @@
 #define IDX_FAMILY_SIZE 13
 #define IDX_REPRODUCTIONS 14
 
-int R_initial_pack_number;
-int R_initial_vagrant_number;
-int **R_initial_population;
-
-double R_survival_av_PUP;
-double R_survival_av_SUBADULT;
-double R_survival_av_VAGRANT;
-double R_survival_av_ALPHA;
-
-double R_survival_sd_PUP;
-double R_survival_sd_SUBADULT;
-double R_survival_sd_VAGRANT;
-double R_survival_sd_ALPHA;
-
-double R_litter_size_av;
-double R_litter_size_sd;
-
-double R_dispersing_weib_shape_av;
-double R_dispersing_weib_scale_av;
-double R_settling_weib_shape_av;
-double R_settling_weib_scale_av;
-
-double R_dispersing_weib_shape_sd;
-double R_dispersing_weib_scale_sd;
-double R_settling_weib_shape_sd;
-double R_settling_weib_scale_sd;
-
-double R_pair1breed_av;
-double R_pair1breed_sd;
-
-int **R_quota;
-
 typedef struct t_individual t_individual;
 typedef struct t_pack t_pack;
 typedef struct t_population t_population;
@@ -115,10 +83,10 @@ struct t_population {
 	int number_indiv_history;
 	int number_packs;
 	double **history_indiv;
-	
+
 	t_individual *all_indiv;
 	t_pack *all_packs;
-    
+
 	double survival[4];
 	double litter_size;
 	double dispersing_weib_shape;

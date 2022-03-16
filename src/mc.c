@@ -1,6 +1,6 @@
 /* mc.c
  *
- * Copyright (C) 2011, 2012, 2013, 2014, 2015, 2016 Guillaume Chapron.
+ * Copyright (C) 2011-2022 Guillaume Chapron.
  * guillaume.chapron@slu.se
  * with contributions from Camilla Wikenros, Olof Liberg, Øystein Flagstad,
  * Cyril Milleret, Johan Månsson, Linn Svensson, Barbara Zimmermann,
@@ -32,6 +32,7 @@
 #include <Rmath.h>
 
 #include "mc.h"
+#include "globals.h"
 
 /////////////////////////////////////////////////////////////////////////////////
 // Allocate statistics
@@ -40,7 +41,7 @@
 void mc_allocate_statistics(struct statistics *stats) {
 
 	stats->runs = malloc(R_number_mc_runs * sizeof(double **));
-	
+
 	for (long i = 0; i < R_number_mc_runs; i++) {
 		stats->runs[i] = malloc(number_of_months * sizeof(double *));
 		for (long j = 0; j < number_of_months; j++) {
@@ -50,16 +51,16 @@ void mc_allocate_statistics(struct statistics *stats) {
 			}
 		}
 	}
-	
+
 	stats->individuals = malloc(R_number_mc_runs * MAX_INDIV * sizeof(double*));
-	
+
 	for (int i = 0; i < R_number_mc_runs * MAX_INDIV; i++) {
 		stats->individuals[i] = malloc(5 * sizeof(double));
 		for (int j = 0; j < 5; j++) {
 			stats->individuals[i][j] = 0;
 		}
 	}
-	
+
 	stats->number_mc_indiv_ever = 0;
 	stats->number_mc_indiv_eversize = R_number_mc_runs * MAX_INDIV;
 
@@ -78,7 +79,7 @@ void mc_free_results(struct statistics *stats) {
 		free(stats->runs[i]);
 	}
 	free(stats->runs);
-	
+
 	for (long i = 0; i < stats->number_mc_indiv_eversize; i++) {
 		free(stats->individuals[i]);
 	}
@@ -97,9 +98,9 @@ void monte_carlo(struct statistics *stats) {
 	GetRNGstate();
 
 	long steps = R_number_mc_runs/50;
-	
+
 	long incr_mc_alloc = 0;
-    
+
     Rprintf("\n|");
 
 	for (long i = 0; i < R_number_mc_runs; i++) {
@@ -107,7 +108,7 @@ void monte_carlo(struct statistics *stats) {
 		t_population *pop = malloc(sizeof(t_population));
 
 		set_constant_parameters(pop);
-		
+
 		set_deterministic_parameters(pop);
 
 		create_population(pop);
@@ -117,7 +118,7 @@ void monte_carlo(struct statistics *stats) {
 		for (long j = 1; j <= R_number_of_years; j++) {
 
 //            set_stochastic_parameters(pop);
-			
+
 			cycle_year(pop, i, j, stats);
 
 			if (pop->number_indiv == 0) {
@@ -125,31 +126,31 @@ void monte_carlo(struct statistics *stats) {
 			}
 
 		}
-		
+
 		if ( stats->number_mc_indiv_ever + pop->number_indiv_history > stats->number_mc_indiv_eversize ) {
-			
+
 			incr_mc_alloc = (int)(stats->number_mc_indiv_ever + pop->number_indiv_history) / stats->number_mc_indiv_eversize + 1;
-			
+
 			stats->individuals = realloc(stats->individuals, incr_mc_alloc * stats->number_mc_indiv_eversize * sizeof(double *));
-			
+
 			for (long k = stats->number_mc_indiv_eversize; k < incr_mc_alloc * stats->number_mc_indiv_eversize; k++) {
 				stats->individuals[k] = malloc(NUMBER_OF_EVENTS * sizeof(double));
 				for (int l = 0; l < NUMBER_OF_EVENTS; l++) {
 					stats->individuals[k][l] = 0;
 				}
 			}
-			
+
 			stats->number_mc_indiv_eversize = incr_mc_alloc * stats->number_mc_indiv_eversize;
-			
+
 		}
-		
+
 		for (int k = 0; k < pop->number_indiv_history; k++) {
 			for (int l = 0; l < NUMBER_OF_EVENTS - 1; l++) {
 				stats->individuals[stats->number_mc_indiv_ever + k][l] = pop->history_indiv[k][l];
 			}
 			stats->individuals[stats->number_mc_indiv_ever + k][NUMBER_OF_EVENTS - 1] = i;
 		}
-		
+
 		stats->number_mc_indiv_ever += pop->number_indiv_history;
 
 		if (steps > 0) {
