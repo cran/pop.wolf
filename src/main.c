@@ -152,14 +152,20 @@ SEXP C_montecarlo (
 	}
 
 	PROTECT(list = allocVector(VECSXP, 2)); nprot++;
-
 	SET_VECTOR_ELT(list, 0, R_runs);
-
 	SET_VECTOR_ELT(list, 1, R_individuals);
-
 	setAttrib(list, R_NamesSymbol, list_names);
-
 	UNPROTECT(nprot);
+    
+    for (int i = 0; i < LENGTH(SEXP_quota)/5; i++) {
+        free(R_quota[i]);
+    }
+    free(R_quota);
+
+    for (int i = 0; i < LENGTH(SEXP_initial_packs)/3; i++) {
+        free(R_initial_population[i]);
+    }
+    free(R_initial_population);
 
 	mc_free_results(stats);
 

@@ -1,8 +1,8 @@
 Package: pop.wolf
 Type: Package
 Title: Models for Simulating Wolf Populations
-Version: 0.2
-Date: 2022-03-15
+Version: 1.0
+Date: 2022-04-06
 Authors@R: c(person("Guillaume", "Chapron", role = c("aut", "cre"), email = "guillaume.chapron@slu.se"),
              person("Camilla", "Wikenros", role = "ctb"),
              person("Olof", "Liberg", role = "ctb"),
@@ -32,5 +32,5 @@ Depends: parallel, abind
 NeedsCompilation: yes
 Encoding: UTF-8
 Repository: CRAN
-Packaged: 2022-03-15 14:05:06 UTC; guillaume
-Date/Publication: 2022-03-16 13:20:02 UTC
+Packaged: 2022-04-06 15:56:49 UTC; guillaume
+Date/Publication: 2022-04-06 16:20:02 UTC

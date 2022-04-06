@@ -1,4 +1,4 @@
-4d10b27254a7bf97c7e07898a5140d7f *DESCRIPTION
+e69e2a7ab58ce6e7b2e82ef373146dba *DESCRIPTION
 6372d907bf147d837cab9f3bf9571dd1 *NAMESPACE
 702be25d73a250d8e2bf5ffbd091ae48 *R/plot_projection.r
 e1aa9c845c709c744bee189125225645 *R/project.r
@@ -7,10 +7,11 @@ c77f5c022fbe9372f160b40928f7a46c *man/plot_projection.Rd
 a0ec87ad4b675a5da91f859dc06e11e2 *man/pop.wolf-package.Rd
 a7489ee0fe56da41e8757de962b5aa0e *man/project.Rd
 16118bee3dfd1958da2addb1e30628d2 *src/globals.h
-4e942826b518f18021b10e105e5ad091 *src/main.c
+dbd4ea64ab90998e971001f009141e82 *src/main.c
 f821fea64a354a59edc4a355ff2f27f3 *src/mc.c
 9c3836ee905cc611cf7352da73d5c592 *src/mc.h
 f2c81488f983348e5acad181700a24c1 *src/pop.c
 0c0337cebdd9faf392ab4a8281e41d26 *src/pop.h
+2a469b4f134c2fd0cfc044755ba7ae1b *src/pop.wolf_init.c
 ecd347b65fe5778313addaca05c441d9 *src/tools.c
 5b78aea1ce2a27cebac59473546d71f1 *src/tools.h
